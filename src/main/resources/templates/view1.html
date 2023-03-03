@@ -33,7 +33,7 @@
 				<tr>
 					<td>Quantity:</td>
 					<td>
-						<input type="number" name="quantity" size="4" placeholder="Quantity" data-th-field="*{quantity}">
+						<input type="number" name="quantity" min="1" size="4" placeholder="Quantity" data-th-field="*{quantity}">
 						<div data-th-if="${#fields.hasErrors('quantity')}">
 							<span data-th-errors="*{quantity}" data-th-errorclass="error"></span>
 						</div>

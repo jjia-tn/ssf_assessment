@@ -1,5 +1,6 @@
 package ibf2022.batch2.ssf.ssf_assessment.controller;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import ibf2022.batch2.ssf.ssf_assessment.model.Cart;
 import ibf2022.batch2.ssf.ssf_assessment.model.Item;
+import ibf2022.batch2.ssf.ssf_assessment.model.Order;
+import ibf2022.batch2.ssf.ssf_assessment.model.Quotation;
 import ibf2022.batch2.ssf.ssf_assessment.model.Shipping;
 // import ibf2022.batch2.ssf.ssf_assessment.model.Shipping;
 import ibf2022.batch2.ssf.ssf_assessment.service.CartService;
@@ -66,6 +69,24 @@ public class PurchaseOrderController {
             return "view1";
         }
 
+        List<String> listOfItems = new LinkedList<>();
+
+        List<Item> temp = cart.getContents();
+
+        for (int i = 0; i < temp.size(); i++) {
+
+            String toAdd = temp.get(i).getItem();
+            listOfItems.add(toAdd);
+        }
+
+        // if (!listOfItems.contains(item.getItem())) {
+
+        //     cart.addItemToCart(item);
+        // }
+        // else {
+            
+        // }
+
         cart.addItemToCart(item);
         model.addAttribute("item", item);
         model.addAttribute("cart", cart);
@@ -90,16 +111,26 @@ public class PurchaseOrderController {
         return "view2";
     }
 
-    @PostMapping
-    public String postOrder(Model model, HttpSession sess, @Valid Shipping shipping, BindingResult binding) {
+    @PostMapping(path = "/view3")
+    public String postOrder(Model model, HttpSession sess, @Valid Shipping shipping, BindingResult binding,
+        Order order, Quotation quotation) throws Exception {
 
         if (binding.hasErrors()) {
             return "view2"; 
         }
 
-        // Cart cart = (Cart)sess.getAttribute("cart");
+        Cart cart = (Cart)sess.getAttribute("cart");
+        float total = cartSvc.calculateCost(cart);
+        String orderId = cartSvc.getOrderId(cart);
+
+        order.setOrderId(orderId);
+        order.setTotalCost(total);
 
         model.addAttribute("shipping", shipping);
+        model.addAttribute("order", order);
+        model.addAttribute("quotation", quotation);
+
+        sess.invalidate();
 
         return "view3";
     }

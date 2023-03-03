@@ -8,9 +8,29 @@ public class Order {
 
     private final Shipping shipping;
 
+    private float totalCost = -1;
+
+    private String orderId;
+
     public Order(Cart cart, Shipping shipping) {
         this.cart = cart;
         this.shipping = shipping;
+    }
+
+    public float getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(float totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public List<Item> getContents() {

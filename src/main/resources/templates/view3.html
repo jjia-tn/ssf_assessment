@@ -14,22 +14,22 @@
 
         <tr>
             <td>Invoice id:</td>
-            <td><span data-th-text="${}"></span></td>
+            <td><span data-th-text="${order.orderId}"></span></td>
         </tr>
 
         <tr>
             <td>Name:</td>
-            <td><span data-th-text="${}"></span></td>
+            <td><span data-th-text="${shipping.name}"></span></td>
         </tr>
 
         <tr>
             <td>Address:</td>
-            <td><span data-th-text="${}"></span></td>
+            <td><span data-th-text="${shipping.address}"></span></td>
         </tr>
 
         <tr>
             <td>Total:</td>
-            <td><span data-th-text="${}"></span></td>
+            <td><span data-th-text="${order.totalCost}"></span></td>
         </tr>
 
     </table>
